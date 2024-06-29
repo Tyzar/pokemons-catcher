@@ -4,10 +4,10 @@ import android.util.Log
 import com.assignment.pokemoncatcher.BuildConfig
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
-import com.assignment.pokemoncatcher.datasources.remote.PokemonApi
-import com.assignment.pokemoncatcher.datasources.remote.requests.getpokemondetail.GetPokemonDetailRequest
-import com.assignment.pokemoncatcher.datasources.remote.requests.getpokemonlist.GetPokemonListRequest
-import com.assignment.pokemoncatcher.datasources.remote.responses.getpokemondetail.toDomain
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemondetail.GetPokemonDetailRequest
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemonlist.GetPokemonListRequest
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.responses.getpokemondetail.toDomain
 import com.assignment.pokemoncatcher.domain.entities.FetchFilter
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import com.assignment.pokemoncatcher.domain.repositories.PokemonRepository

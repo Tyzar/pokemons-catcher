@@ -1,4 +1,4 @@
-package com.assignment.pokemoncatcher.datasources.remote.responses.getpokemondetail
+package com.assignment.pokemoncatcher.datasources.remote.pokemonapi.responses.getpokemondetail
 
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import kotlinx.serialization.Serializable

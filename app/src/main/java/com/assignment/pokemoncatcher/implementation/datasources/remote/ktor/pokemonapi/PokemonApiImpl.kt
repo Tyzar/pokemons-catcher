@@ -1,13 +1,13 @@
-package com.assignment.pokemoncatcher.implementation.datasources.remote.ktor
+package com.assignment.pokemoncatcher.implementation.datasources.remote.ktor.pokemonapi
 
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.errors.NetworkError
 import com.assignment.pokemoncatcher.core.utils.Either
-import com.assignment.pokemoncatcher.datasources.remote.PokemonApi
-import com.assignment.pokemoncatcher.datasources.remote.requests.getpokemondetail.GetPokemonDetailRequest
-import com.assignment.pokemoncatcher.datasources.remote.requests.getpokemonlist.GetPokemonListRequest
-import com.assignment.pokemoncatcher.datasources.remote.responses.getpokemondetail.GetPokemonDetailResponse
-import com.assignment.pokemoncatcher.datasources.remote.responses.getpokemonlist.GetPokemonListResponse
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemondetail.GetPokemonDetailRequest
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemonlist.GetPokemonListRequest
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.responses.getpokemondetail.GetPokemonDetailResponse
+import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.responses.getpokemonlist.GetPokemonListResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
