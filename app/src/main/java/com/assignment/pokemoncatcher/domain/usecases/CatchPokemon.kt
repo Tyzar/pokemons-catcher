@@ -2,6 +2,7 @@ package com.assignment.pokemoncatcher.domain.usecases
 
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
+import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
 import com.assignment.pokemoncatcher.domain.repositories.PokemonUtilRepository
@@ -28,7 +29,11 @@ class CatchPokemon @Inject constructor(
 
                 val addResult =
                     myPokemonsRepo.addPokemon(
-                        pokemon
+                        MyPokemon(
+                            pokemon = pokemon,
+                            nickname = "",
+                            renameCount = 0
+                        )
                     )
                 when (addResult) {
                     is Either.left -> Either.left(

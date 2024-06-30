@@ -4,8 +4,9 @@ import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
+import javax.inject.Inject
 
-class GiveNickname(
+class GiveNickname @Inject constructor(
     private val myPokemonsRepo: MyPokemonsRepository
 ) {
     suspend fun execute(

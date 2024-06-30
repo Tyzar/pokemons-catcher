@@ -3,11 +3,9 @@ package com.assignment.pokemoncatcher.di
 import com.assignment.pokemoncatcher.BuildConfig
 import com.assignment.pokemoncatcher.datasources.remote.pokemon_util_api.PokemonUtilApi
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
-import com.assignment.pokemoncatcher.domain.repositories.PokemonRepository
-import com.assignment.pokemoncatcher.implementation.datasources.remote.ktor.pokemonapi.PokemonApiImpl
 import com.assignment.pokemoncatcher.implementation.datasources.remote.ktor.createKtorHttpClient
 import com.assignment.pokemoncatcher.implementation.datasources.remote.ktor.pokemon_util_api.PokemonUtilApiImpl
-import com.assignment.pokemoncatcher.implementation.repositories.PokemonRepoImpl
+import com.assignment.pokemoncatcher.implementation.datasources.remote.ktor.pokemonapi.PokemonApiImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class PokemonListModule {
+abstract class RemoteDataSourcesModule {
     companion object {
         @Provides()
         @Singleton
@@ -42,15 +40,6 @@ abstract class PokemonListModule {
                 httpClient
             )
         }
-
-        @Provides
-        fun providePokemonRepoImpl(
-            pokemonApi: PokemonApi
-        ): PokemonRepoImpl {
-            return PokemonRepoImpl(
-                pokemonApi
-            )
-        }
     }
 
     @Binds
@@ -64,9 +53,4 @@ abstract class PokemonListModule {
     abstract fun providePokemonUtilApi(
         pokemonUtilApiImpl: PokemonUtilApiImpl
     ): PokemonUtilApi
-
-    @Binds
-    abstract fun providePokemonRepo(
-        pokemonRepoImpl: PokemonRepoImpl
-    ): PokemonRepository
 }

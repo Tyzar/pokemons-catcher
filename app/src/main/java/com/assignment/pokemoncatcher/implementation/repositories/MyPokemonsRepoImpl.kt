@@ -2,34 +2,48 @@ package com.assignment.pokemoncatcher.implementation.repositories
 
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
+import com.assignment.pokemoncatcher.datasources.local.mypokemon_localdata.MyPokemonLocalData
 import com.assignment.pokemoncatcher.domain.entities.MyPokemon
-import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
+import javax.inject.Inject
 
-class MyPokemonsRepoImpl: MyPokemonsRepository {
+class MyPokemonsRepoImpl @Inject constructor(
+    private val myPokemonLocalData: MyPokemonLocalData
+) : MyPokemonsRepository {
     override suspend fun addPokemon(
-        pokemon: Pokemon
+        myPokemon: MyPokemon
     ): Either<AppError, Unit> {
-        TODO("Not yet implemented")
+        return myPokemonLocalData.upsert(
+            myPokemon
+        )
     }
 
     override suspend fun getAll(): Either<AppError, List<MyPokemon>> {
-        TODO("Not yet implemented")
+        return myPokemonLocalData.get()
     }
 
     override suspend fun removePokemon(
-        pokemon: Pokemon
+        myPokemon: MyPokemon
     ): Either<AppError, Unit> {
-        TODO("Not yet implemented")
+        return myPokemonLocalData.delete(
+            myPokemon
+        )
     }
 
     override suspend fun get(id: Int): MyPokemon? {
-        TODO("Not yet implemented")
+        val result =
+            myPokemonLocalData.get(id)
+        return when (result) {
+            is Either.left -> null
+            is Either.right -> result.value
+        }
     }
 
     override suspend fun updateMyPokemon(
-        pokemon: MyPokemon
+        myPokemon: MyPokemon
     ): Either<AppError, Unit> {
-        TODO("Not yet implemented")
+        return myPokemonLocalData.upsert(
+            myPokemon
+        )
     }
 }

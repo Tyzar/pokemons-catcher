@@ -2,7 +2,7 @@ package com.assignment.pokemoncatcher.domain.usecases
 
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
-import com.assignment.pokemoncatcher.domain.entities.Pokemon
+import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
 import com.assignment.pokemoncatcher.domain.repositories.PokemonUtilRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ class ReleasePokemon @Inject constructor(
     private val pokemonUtilRepo: PokemonUtilRepository,
     private val myPokemonsRepo: MyPokemonsRepository
 ) {
-    suspend fun execute(pokemon: Pokemon): Either<AppError, Boolean> {
+    suspend fun execute(myPokemon: MyPokemon): Either<AppError, Boolean> {
         val releaseNumberResult =
             pokemonUtilRepo.releasePokemon()
         return when (releaseNumberResult) {
@@ -33,7 +33,7 @@ class ReleasePokemon @Inject constructor(
                 }
 
                 myPokemonsRepo.removePokemon(
-                    pokemon
+                    myPokemon
                 )
                 return Either.right(true)
             }

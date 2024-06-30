@@ -1,5 +1,6 @@
 package com.assignment.pokemoncatcher
 
+import PokemonAppTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,8 +11,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.assignment.pokemoncatcher.presentation.views.themes.PokemonCatcherTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity :
     ComponentActivity() {
     override fun onCreate(
@@ -22,7 +24,7 @@ class MainActivity :
         )
         enableEdgeToEdge()
         setContent {
-            PokemonCatcherTheme {
+            PokemonAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",

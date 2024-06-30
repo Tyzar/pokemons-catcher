@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.dev.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 val debugProps =
@@ -93,23 +94,32 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility =
             JavaVersion.VERSION_17
         targetCompatibility =
             JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion =
             libs.versions.kotlinCompilerExtension.get()
     }
+
+    room {
+        schemaDirectory("$projectDir/db-schemas")
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -143,6 +153,7 @@ dependencies {
 
     //Room
     implementation(libs.bundles.room)
+    annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
 
     //Ktor Http Client

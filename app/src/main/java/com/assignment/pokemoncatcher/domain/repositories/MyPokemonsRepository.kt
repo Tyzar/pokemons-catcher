@@ -6,9 +6,11 @@ import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 
 interface MyPokemonsRepository {
-    suspend fun addPokemon(pokemon: Pokemon): Either<AppError, Unit>
+    suspend fun addPokemon(myPokemon: MyPokemon): Either<AppError, Unit>
     suspend fun getAll(): Either<AppError, List<MyPokemon>>
-    suspend fun removePokemon(pokemon: Pokemon): Either<AppError, Unit>
+    suspend fun removePokemon(myPokemon: MyPokemon): Either<AppError, Unit>
     suspend fun get(id: Int): MyPokemon?
-    suspend fun updateMyPokemon(pokemon: MyPokemon): Either<AppError, Unit>
+    suspend fun updateMyPokemon(
+        myPokemon: MyPokemon
+    ): Either<AppError, Unit>
 }
