@@ -139,6 +139,7 @@ dependencies {
         platform(libs.androidx.compose.bom)
     implementation(composeBom)
     implementation(libs.bundles.compose)
+    debugImplementation(libs.compose.ui.tooling)
 
     //dagger hilt
     implementation(libs.bundles.hilt)

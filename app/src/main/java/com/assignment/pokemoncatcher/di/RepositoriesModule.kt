@@ -1,6 +1,7 @@
 package com.assignment.pokemoncatcher.di
 
 import com.assignment.pokemoncatcher.datasources.local.mypokemon_localdata.MyPokemonLocalData
+import com.assignment.pokemoncatcher.datasources.local.pokemon_localdata.PokemonLocalData
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
 import com.assignment.pokemoncatcher.domain.repositories.PokemonRepository
@@ -18,10 +19,12 @@ abstract class RepositoriesModule {
     companion object {
         @Provides
         fun providePokemonRepoImpl(
-            pokemonApi: PokemonApi
+            pokemonApi: PokemonApi,
+            pokemonLocalData: PokemonLocalData
         ): PokemonRepoImpl {
             return PokemonRepoImpl(
-                pokemonApi
+                pokemonApi,
+                pokemonLocalData
             )
         }
 

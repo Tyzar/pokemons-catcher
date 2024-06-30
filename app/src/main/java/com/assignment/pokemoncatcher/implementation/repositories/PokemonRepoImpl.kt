@@ -4,6 +4,7 @@ import android.util.Log
 import com.assignment.pokemoncatcher.BuildConfig
 import com.assignment.pokemoncatcher.core.errors.AppError
 import com.assignment.pokemoncatcher.core.utils.Either
+import com.assignment.pokemoncatcher.datasources.local.pokemon_localdata.PokemonLocalData
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemondetail.GetPokemonDetailRequest
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.requests.getpokemonlist.GetPokemonListRequest
@@ -14,7 +15,8 @@ import com.assignment.pokemoncatcher.domain.repositories.PokemonRepository
 import javax.inject.Inject
 
 class PokemonRepoImpl @Inject constructor(
-    private val api: PokemonApi
+    private val api: PokemonApi,
+    private val pokemonLocalData: PokemonLocalData
 ) : PokemonRepository {
 
     override suspend fun getPokemonList(
@@ -49,7 +51,7 @@ class PokemonRepoImpl @Inject constructor(
         }
     }
 
-    suspend fun getPokemonDetailBatch(
+    private suspend fun getPokemonDetailBatch(
         urls: List<String>
     ): List<Pokemon> {
         val pokemons =
@@ -78,12 +80,17 @@ class PokemonRepoImpl @Inject constructor(
                     pokemons.add(
                         apiResult.value.toDomain()
                     )
+
                     if (BuildConfig.DEBUG) {
                         Log.d(
                             "Pokemon",
                             "Success fetch detail pokemon ${apiResult.value.name}"
                         )
                     }
+
+                    pokemonLocalData.batchUpsert(
+                        pokemons
+                    )
                 }
             }
         }
