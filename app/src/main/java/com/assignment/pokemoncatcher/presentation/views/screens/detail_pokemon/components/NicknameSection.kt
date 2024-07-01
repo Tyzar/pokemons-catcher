@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 fun NicknameSection(
     modifier: Modifier = Modifier,
     currentNickname: String,
+    onRename: () -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -41,7 +42,8 @@ fun NicknameSection(
         IconButton(
             modifier = Modifier.size(
                 18.dp
-            ), onClick = { /*TODO*/ }) {
+            ), onClick = onRename
+        ) {
             Icon(
                 imageVector = Icons.Outlined.Edit,
                 contentDescription = "rename"

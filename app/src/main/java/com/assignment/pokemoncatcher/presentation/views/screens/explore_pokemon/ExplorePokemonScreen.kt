@@ -18,6 +18,7 @@ import com.assignment.pokemoncatcher.presentation.uistate.explore_pokemons.Explo
 import com.assignment.pokemoncatcher.presentation.uistate.explore_pokemons.ExplorePokemonsVm
 import com.assignment.pokemoncatcher.presentation.views.components.ContentLoading
 import com.assignment.pokemoncatcher.presentation.views.routes.DetailPokemonRoute
+import com.assignment.pokemoncatcher.presentation.views.routes.MyPokemonsRoute
 import com.assignment.pokemoncatcher.presentation.views.screens.explore_pokemon.components.ExplorePokemonTopBar
 import com.assignment.pokemoncatcher.presentation.views.screens.explore_pokemon.components.PokemonsGrid
 
@@ -53,7 +54,12 @@ fun ExplorePokemonScreen(
     }
 
     Scaffold(topBar = {
-        ExplorePokemonTopBar()
+        ExplorePokemonTopBar(
+            onMyPokemonsClicked = {
+                navController.navigate(
+                    MyPokemonsRoute.GROUP_PATH
+                )
+            })
     }, snackbarHost = {
         SnackbarHost(hostState = snackbarHostState)
     }) { contentPadding ->

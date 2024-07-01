@@ -1,22 +1,25 @@
 package com.assignment.pokemoncatcher.presentation.views
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.assignment.pokemoncatcher.presentation.views.routes.CatchPokemonRoute
+import com.assignment.pokemoncatcher.presentation.views.routes.DetailMyPokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.DetailPokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.ExplorePokemonRoute
-import com.assignment.pokemoncatcher.presentation.views.routes.GiveNicknameRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.MyPokemonsRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.PokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.ReleasePokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.SplashScreenRoute
 import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.CatchPokemonScreen
-import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.DetailPokemonScreen
+import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.my_pokemon.DetailMyPokemonScreen
+import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.pokemon.DetailPokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.explore_pokemon.ExplorePokemonScreen
+import com.assignment.pokemoncatcher.presentation.views.screens.my_pokemons.MyPokemonsScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.splashscreen.SplashScreen
 
 @Composable
@@ -59,10 +62,6 @@ fun PokemonApp() {
                 )
             }
 
-            composable(MyPokemonsRoute.PATH) {
-
-            }
-
             composable(
                 CatchPokemonRoute.PATH,
                 arguments = CatchPokemonRoute().getArgs()
@@ -85,15 +84,59 @@ fun PokemonApp() {
                 )
             }
 
-            composable(
-                ReleasePokemonRoute.PATH,
-                arguments = ReleasePokemonRoute().getArgs()
+            navigation(
+                startDestination = MyPokemonsRoute.PATH,
+                route = MyPokemonsRoute.GROUP_PATH
             ) {
+                composable(
+                    MyPokemonsRoute.PATH
+                ) {
+                    val parentEntry =
+                        remember(it) {
+                            navController.getBackStackEntry(
+                                MyPokemonsRoute.GROUP_PATH
+                            )
+                        }
+                    MyPokemonsScreen(
+                        navController = navController,
+                        myPokemonsVm = hiltViewModel(
+                            parentEntry
+                        )
+                    )
+                }
 
-            }
+                composable(
+                    DetailMyPokemonRoute.PATH,
+                    arguments = DetailMyPokemonRoute().getArgs()
+                ) {
+                    val parentEntry =
+                        remember(it) {
+                            navController.getBackStackEntry(
+                                MyPokemonsRoute.GROUP_PATH
+                            )
+                        }
 
-            composable(GiveNicknameRoute.PATH) {
+                    val id: Int =
+                        it.arguments?.getString(
+                            DetailMyPokemonRoute.ID
+                        )?.toInt() ?: 0
 
+                    DetailMyPokemonScreen(
+                        id = id,
+                        navController = navController,
+                        detailMyPokemonVm = hiltViewModel(),
+                        myPokemonsVm = hiltViewModel(
+                            parentEntry
+                        )
+                    )
+                }
+
+                composable(
+                    ReleasePokemonRoute.PATH,
+                    arguments = ReleasePokemonRoute().getArgs()
+                ) {
+
+                }
             }
         }
     }

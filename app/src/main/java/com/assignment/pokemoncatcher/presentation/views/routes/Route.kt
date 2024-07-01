@@ -79,7 +79,10 @@ class DetailPokemonRoute : Route {
 
 class MyPokemonsRoute : Route {
     companion object {
-        const val PATH = "my-pokemons"
+        const val GROUP_PATH =
+            "my-pokemons"
+        const val PATH =
+            "my-pokemon-list"
     }
 
     override fun getArgs(): List<NamedNavArgument> {
@@ -89,7 +92,6 @@ class MyPokemonsRoute : Route {
     override fun withParam(param: Map<String, Any>?): String {
         return PATH
     }
-
 }
 
 class CatchPokemonRoute : Route {
@@ -142,17 +144,50 @@ class ReleasePokemonRoute : Route {
 
 }
 
-class GiveNicknameRoute : Route {
+class DetailMyPokemonRoute : Route {
     companion object {
-        const val PATH = "give-nickname"
+        const val ID = "id"
+        const val PATH =
+            "detail-my-pokemon/{$ID}"
     }
 
     override fun getArgs(): List<NamedNavArgument> {
-        return emptyList()
+        return listOf(navArgument(ID) {
+            NavType.IntType
+        })
     }
 
     override fun withParam(param: Map<String, Any>?): String {
-        return PATH
+        return "detail-my-pokemon/${
+            param?.get(
+                ID
+            )
+        }"
+    }
+}
+
+class ReleaseMyPokemonRoute : Route {
+    companion object {
+        const val ID = "id"
+        const val NAME = "name"
+        const val PATH =
+            "release-my-pokemon/{$ID}/{$NAME}"
+    }
+
+    override fun getArgs(): List<NamedNavArgument> {
+        return listOf(
+            navArgument(ID) {
+                NavType.IntType
+            },
+            navArgument(NAME) { NavType.StringType })
+    }
+
+    override fun withParam(param: Map<String, Any>?): String {
+        return "release-my-pokemon/${
+            param?.get(
+                ID
+            )
+        }/${param?.get(NAME)}"
     }
 }
 

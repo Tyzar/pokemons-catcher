@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RenamePokemonResponse(
     val status: Boolean,
-    val message: String?,
-    val data: RenamePokemonData?
+    val message: String? = null,
+    val data: RenamePokemonData? = null
 ) {
     @Serializable
     data class RenamePokemonData(

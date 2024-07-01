@@ -1,4 +1,4 @@
-package com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon
+package com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.pokemon
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
