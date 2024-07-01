@@ -13,8 +13,8 @@ interface MyPokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(tMyPokemon: TableMyPokemon)
 
-    @Delete
-    fun delete(tMyPokemon: TableMyPokemon)
+    @Query("DELETE FROM my_pokemon WHERE pokemonId = :pokemonId")
+    fun delete(pokemonId: Int)
 
     @Query(
         "SELECT * FROM my_pokemon " +

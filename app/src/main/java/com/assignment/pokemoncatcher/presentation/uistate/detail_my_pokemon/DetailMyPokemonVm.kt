@@ -29,9 +29,7 @@ class DetailMyPokemonVm @Inject constructor(
                 event
             )
 
-            is DetailMyPokemonEvent.Rename -> handleRename(
-                event
-            )
+            is DetailMyPokemonEvent.Rename -> handleRename()
         }
     }
 
@@ -71,12 +69,16 @@ class DetailMyPokemonVm @Inject constructor(
         }
     }
 
-    private fun handleRename(event: DetailMyPokemonEvent.Rename) {
+    private fun handleRename() {
         viewModelScope.launch {
             if (mState.value.myPokemon == null) {
                 return@launch
             }
 
+            mState.value =
+                mState.value.copy(
+                    renameResult = null
+                )
             val renameResult =
                 renamePokemon.execute(
                     mState.value.myPokemon!!

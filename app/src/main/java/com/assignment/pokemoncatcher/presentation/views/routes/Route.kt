@@ -124,13 +124,16 @@ class CatchPokemonRoute : Route {
 class ReleasePokemonRoute : Route {
     companion object ParamKey {
         const val ID = "id"
+        const val NAME = "name"
         const val PATH =
-            "release-pokemon/{$ID}"
+            "release-pokemon/{$ID}/{$NAME}"
     }
 
     override fun getArgs(): List<NamedNavArgument> {
         return listOf(navArgument(ID) {
-            type = NavType.IntType
+            type = NavType.StringType
+        }, navArgument(NAME) {
+            type = NavType.StringType
         })
     }
 
@@ -139,7 +142,7 @@ class ReleasePokemonRoute : Route {
             param?.get(
                 ID
             )
-        }"
+        }/${param?.get(NAME)}"
     }
 
 }
@@ -163,31 +166,6 @@ class DetailMyPokemonRoute : Route {
                 ID
             )
         }"
-    }
-}
-
-class ReleaseMyPokemonRoute : Route {
-    companion object {
-        const val ID = "id"
-        const val NAME = "name"
-        const val PATH =
-            "release-my-pokemon/{$ID}/{$NAME}"
-    }
-
-    override fun getArgs(): List<NamedNavArgument> {
-        return listOf(
-            navArgument(ID) {
-                NavType.IntType
-            },
-            navArgument(NAME) { NavType.StringType })
-    }
-
-    override fun withParam(param: Map<String, Any>?): String {
-        return "release-my-pokemon/${
-            param?.get(
-                ID
-            )
-        }/${param?.get(NAME)}"
     }
 }
 

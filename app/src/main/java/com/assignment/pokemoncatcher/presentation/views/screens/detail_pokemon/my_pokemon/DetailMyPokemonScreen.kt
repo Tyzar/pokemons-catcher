@@ -125,7 +125,9 @@ fun DetailMyPokemonScreen(
                     navController.navigate(
                         ReleasePokemonRoute().withParam(
                             mapOf(
-                                ReleasePokemonRoute.ID to id
+                                ReleasePokemonRoute.ID to id,
+                                ReleasePokemonRoute.NAME to detailState.myPokemon!!
+                                    .nickname
                             )
                         )
                     )

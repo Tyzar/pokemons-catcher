@@ -15,7 +15,8 @@ import com.assignment.pokemoncatcher.presentation.views.routes.MyPokemonsRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.PokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.ReleasePokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.SplashScreenRoute
-import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.CatchPokemonScreen
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.catch_pokemon.CatchPokemonScreen
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.release_pokemon.ReleasePokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.my_pokemon.DetailMyPokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.pokemon.DetailPokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.explore_pokemon.ExplorePokemonScreen
@@ -135,7 +136,31 @@ fun PokemonApp() {
                     ReleasePokemonRoute.PATH,
                     arguments = ReleasePokemonRoute().getArgs()
                 ) {
+                    val parentEntry =
+                        remember(it) {
+                            navController.getBackStackEntry(
+                                MyPokemonsRoute.GROUP_PATH
+                            )
+                        }
 
+                    val id: Int =
+                        it.arguments?.getString(
+                            ReleasePokemonRoute.ID
+                        )?.toInt() ?: 0
+                    val name =
+                        it.arguments?.getString(
+                            ReleasePokemonRoute.NAME
+                        ) ?: ""
+
+                    ReleasePokemonScreen(
+                        id = id,
+                        name = name,
+                        navController = navController,
+                        releasePokemonVm = hiltViewModel(),
+                        myPokemonsVm = hiltViewModel(
+                            parentEntry
+                        )
+                    )
                 }
             }
         }

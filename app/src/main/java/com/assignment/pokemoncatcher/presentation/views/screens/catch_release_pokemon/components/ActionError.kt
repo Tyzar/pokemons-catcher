@@ -1,4 +1,4 @@
-package com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.components
+package com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.assignment.pokemoncatcher.presentation.views.components.ActionButton
 
 @Composable
-fun CatchError(
+fun ActionError(
     modifier: Modifier = Modifier,
     message: String,
     onTryAgain: () -> Unit

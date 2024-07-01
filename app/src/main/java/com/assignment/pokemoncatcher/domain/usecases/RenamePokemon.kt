@@ -21,16 +21,22 @@ class RenamePokemon @Inject constructor(
         }
 
         val baseName =
-            if (!myPokemon.nickname.contains(
-                    "-"
-                ) && myPokemon.renameCount == 0
+            if (myPokemon.renameCount == 0
             ) {
                 myPokemon.nickname
             } else {
-                val splittedName =
-                    myPokemon.nickname.trim()
-                        .split("-")
-                splittedName[0]
+                val numberIdx =
+                    myPokemon.nickname.lastIndexOf(
+                        "-"
+                    )
+                if (numberIdx == -1) {
+                    myPokemon.nickname
+                } else {
+                    myPokemon.nickname.substring(
+                        0,
+                        numberIdx
+                    )
+                }
             }
         val renameCount =
             myPokemon.renameCount + 1

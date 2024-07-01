@@ -23,10 +23,10 @@ class MyPokemonsRepoImpl @Inject constructor(
     }
 
     override suspend fun removePokemon(
-        myPokemon: MyPokemon
+        id: Int
     ): Either<AppError, Unit> {
         return myPokemonLocalData.delete(
-            myPokemon
+            id
         )
     }
 

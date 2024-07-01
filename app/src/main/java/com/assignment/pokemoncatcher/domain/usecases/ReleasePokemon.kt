@@ -1,8 +1,8 @@
 package com.assignment.pokemoncatcher.domain.usecases
 
 import com.assignment.pokemoncatcher.core.errors.AppError
+import com.assignment.pokemoncatcher.core.utils.DebugLog
 import com.assignment.pokemoncatcher.core.utils.Either
-import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
 import com.assignment.pokemoncatcher.domain.repositories.PokemonUtilRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ class ReleasePokemon @Inject constructor(
     private val pokemonUtilRepo: PokemonUtilRepository,
     private val myPokemonsRepo: MyPokemonsRepository
 ) {
-    suspend fun execute(myPokemon: MyPokemon): Either<AppError, Boolean> {
+    suspend fun execute(pokemonId: Int): Either<AppError, Boolean> {
         val releaseNumberResult =
             pokemonUtilRepo.releasePokemon()
         return when (releaseNumberResult) {
@@ -22,6 +22,7 @@ class ReleasePokemon @Inject constructor(
             )
 
             is Either.right -> {
+                DebugLog.log(msg = "Release number is ${releaseNumberResult.value}")
                 val isPrime =
                     isPrimeNumber(
                         releaseNumberResult.value
@@ -32,8 +33,9 @@ class ReleasePokemon @Inject constructor(
                     )
                 }
 
+                DebugLog.log(msg = "Success release pokemon")
                 myPokemonsRepo.removePokemon(
-                    myPokemon
+                    pokemonId
                 )
                 return Either.right(true)
             }

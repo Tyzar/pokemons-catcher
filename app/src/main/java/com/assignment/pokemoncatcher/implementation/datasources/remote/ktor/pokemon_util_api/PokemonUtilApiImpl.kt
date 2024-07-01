@@ -15,6 +15,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -37,6 +38,7 @@ class PokemonUtilApiImpl @Inject constructor(
     override suspend fun catchPokemon(): Either<AppError, CatchPokemonResponse> =
         withContext(Dispatchers.IO) {
             try {
+                delay(1500)
                 val resp =
                     httpClient.post(
                         POST_CATCH_POKEMON
@@ -64,6 +66,7 @@ class PokemonUtilApiImpl @Inject constructor(
     override suspend fun releasePokemon(): Either<AppError, ReleasePokemonResponse> =
         withContext(Dispatchers.IO) {
             try {
+                delay(1500)
                 val resp =
                     httpClient.post(
                         POST_RELEASE_POKEMON

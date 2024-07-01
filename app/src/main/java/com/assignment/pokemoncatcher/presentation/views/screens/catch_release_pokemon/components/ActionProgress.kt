@@ -1,25 +1,17 @@
-package com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.components
+package com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.components
 
-import androidx.compose.animation.core.InfiniteTransition
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.assignment.pokemoncatcher.presentation.views.components.ContentLoading
 
 @Composable
-fun CatchProgress(
+fun ActionProgress(
     modifier: Modifier = Modifier,
-    pokemonName: String
+    pokemonName: String,
+    actionText: String
 ) {
     Column(
         modifier = modifier,
@@ -64,7 +57,7 @@ fun CatchProgress(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Catching $pokemonName ${
+            text = "$actionText $pokemonName ${
                 ". ".repeat(
                     dotNumbers
                 )

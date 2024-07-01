@@ -1,7 +1,6 @@
-package com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon
+package com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.catch_pokemon
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -17,10 +16,9 @@ import com.assignment.pokemoncatcher.core.utils.Either
 import com.assignment.pokemoncatcher.presentation.uistate.catch_pokemon.CatchPokemonEvent
 import com.assignment.pokemoncatcher.presentation.uistate.catch_pokemon.CatchPokemonVm
 import com.assignment.pokemoncatcher.presentation.views.routes.ExplorePokemonRoute
-import com.assignment.pokemoncatcher.presentation.views.routes.PokemonRoute
-import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.components.CatchError
-import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.components.CatchProgress
-import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.components.CatchSuccess
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.components.ActionError
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.components.ActionProgress
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_release_pokemon.catch_pokemon.components.CatchSuccess
 
 @Composable
 fun CatchPokemonScreen(
@@ -72,49 +70,58 @@ fun CatchPokemonScreen(
             )
         }
     ) { contentPadding ->
-        when (catchState.catchResult) {
-            is Either.left -> CatchError(
+        when (catchState.isCatching) {
+            true -> ActionProgress(
                 modifier = Modifier.fillMaxSize(),
-                message = (catchState.catchResult as Either.left<AppError, Boolean>).value.errMsg,
-                onTryAgain = {
-                    catchPokemonVm.notify(
-                        CatchPokemonEvent.CatchPokemon(
-                            pokemonId
-                        )
-                    )
-                }
+                pokemonName = pokemonName,
+                actionText = "Catching"
             )
 
-            is Either.right -> when ((catchState.catchResult as Either.right<AppError, Boolean>).value) {
-                true -> CatchSuccess(
+            false -> when (catchState.catchResult) {
+                is Either.left -> ActionError(
                     modifier = Modifier.fillMaxSize(),
-                    pokemonName = pokemonName,
-                    onNicknameGiven = {
-                        catchPokemonVm.notify(
-                            CatchPokemonEvent.GiveNickname(
-                                pokemonId,
-                                it
-                            )
-                        )
-                    }
-                )
-
-                false -> CatchError(
-                    modifier = Modifier.fillMaxSize(),
-                    message = "You failed to catch $pokemonName",
+                    message = (catchState.catchResult as Either.left<AppError, Boolean>).value.errMsg,
                     onTryAgain = {
                         catchPokemonVm.notify(
                             CatchPokemonEvent.CatchPokemon(
                                 pokemonId
                             )
                         )
-                    })
-            }
+                    }
+                )
 
-            null -> CatchProgress(
-                modifier = Modifier.fillMaxSize(),
-                pokemonName = pokemonName,
-            )
+                is Either.right -> when ((catchState.catchResult as Either.right<AppError, Boolean>).value) {
+                    true -> CatchSuccess(
+                        modifier = Modifier.fillMaxSize(),
+                        pokemonName = pokemonName,
+                        onNicknameGiven = {
+                            catchPokemonVm.notify(
+                                CatchPokemonEvent.GiveNickname(
+                                    pokemonId,
+                                    it
+                                )
+                            )
+                        }
+                    )
+
+                    false -> ActionError(
+                        modifier = Modifier.fillMaxSize(),
+                        message = "You failed to catch $pokemonName",
+                        onTryAgain = {
+                            catchPokemonVm.notify(
+                                CatchPokemonEvent.CatchPokemon(
+                                    pokemonId
+                                )
+                            )
+                        })
+                }
+
+                null -> ActionProgress(
+                    modifier = Modifier.fillMaxSize(),
+                    pokemonName = pokemonName,
+                    actionText = "Catching"
+                )
+            }
         }
     }
 }

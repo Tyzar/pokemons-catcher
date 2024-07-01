@@ -38,13 +38,11 @@ class MyPokemonLocalDataImpl @Inject constructor(
         }
 
     override suspend fun delete(
-        myPokemon: MyPokemon
+        id: Int
     ): Either<AppError, Unit> =
         withContext(Dispatchers.IO) {
             try {
-                myPokemonDao.delete(
-                    myPokemon.toTable()
-                )
+                myPokemonDao.delete(id)
                 return@withContext Either.right(
                     Unit
                 )
