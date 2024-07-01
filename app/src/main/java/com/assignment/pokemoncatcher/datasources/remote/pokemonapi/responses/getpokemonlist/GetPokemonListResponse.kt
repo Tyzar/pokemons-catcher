@@ -4,9 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetPokemonListResponse(
-    val next: String,
-    val previous: String,
-    val results: List<ResultItem>
+    val next: String?,
+    val results: List<ResultItem>?
 ) {
     @Serializable
     data class ResultItem(

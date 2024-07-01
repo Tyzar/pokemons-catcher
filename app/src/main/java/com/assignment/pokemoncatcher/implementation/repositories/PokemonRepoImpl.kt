@@ -3,6 +3,7 @@ package com.assignment.pokemoncatcher.implementation.repositories
 import android.util.Log
 import com.assignment.pokemoncatcher.BuildConfig
 import com.assignment.pokemoncatcher.core.errors.AppError
+import com.assignment.pokemoncatcher.core.utils.DebugLog
 import com.assignment.pokemoncatcher.core.utils.Either
 import com.assignment.pokemoncatcher.datasources.local.pokemon_localdata.PokemonLocalData
 import com.assignment.pokemoncatcher.datasources.remote.pokemonapi.PokemonApi
@@ -39,9 +40,9 @@ class PokemonRepoImpl @Inject constructor(
             is Either.right -> {
                 val detailResult =
                     getPokemonDetailBatch(
-                        apiResult.value.results.map {
+                        apiResult.value.results?.map {
                             it.url
-                        }
+                        } ?: emptyList()
                     )
 
                 return Either.right(
@@ -49,6 +50,12 @@ class PokemonRepoImpl @Inject constructor(
                 )
             }
         }
+    }
+
+    override suspend fun getPokemonDetail(
+        id: Int
+    ): Pokemon? {
+        return pokemonLocalData.get(id)
     }
 
     private suspend fun getPokemonDetailBatch(
@@ -81,18 +88,15 @@ class PokemonRepoImpl @Inject constructor(
                         apiResult.value.toDomain()
                     )
 
-                    if (BuildConfig.DEBUG) {
-                        Log.d(
-                            "Pokemon",
-                            "Success fetch detail pokemon ${apiResult.value.name}"
-                        )
-                    }
-
-                    pokemonLocalData.batchUpsert(
-                        pokemons
-                    )
+                    DebugLog.log(msg = "Success fetch detail pokemon ${apiResult.value.name}")
                 }
             }
+        }
+
+        if (pokemons.isNotEmpty()) {
+            pokemonLocalData.batchUpsert(
+                pokemons
+            )
         }
 
         return pokemons

@@ -7,5 +7,5 @@ import com.assignment.pokemoncatcher.domain.entities.Pokemon
 interface PokemonLocalData {
     suspend fun upsert(pokemon: Pokemon): Either<AppError, Unit>
     suspend fun batchUpsert(pokemons: List<Pokemon>): Either<AppError, Unit>
-    suspend fun get(id: Int): Either<AppError, Pokemon?>
+    suspend fun get(id: Int): Pokemon?
 }

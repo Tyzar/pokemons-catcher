@@ -2,9 +2,10 @@ package com.assignment.pokemoncatcher.datasources.remote.pokemon_util_api.respon
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class CatchPokemonResponse(
     val status: Boolean,
-    val message: String?,
+    val message: String? = null,
     val data: CatchPokemonData?
 ) {
     @Serializable

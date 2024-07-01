@@ -1,6 +1,5 @@
 package com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,10 +17,12 @@ import com.assignment.pokemoncatcher.domain.entities.Pokemon
 @Composable
 fun BaseStatInfo(
     modifier: Modifier = Modifier,
-    stats: List<Pokemon.Stat>
+    stats: List<Pokemon.Stat>,
+    maxDisplayStat: Int = 6
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
+        userScrollEnabled = false
     ) {
         item {
             Text(
@@ -35,7 +36,7 @@ fun BaseStatInfo(
             )
         }
         items(
-            count = stats.size,
+            count = if (stats.size > maxDisplayStat) maxDisplayStat else stats.size,
             key = { stats[it].statName }) {
             Row(
                 modifier = Modifier

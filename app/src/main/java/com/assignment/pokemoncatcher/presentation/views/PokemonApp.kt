@@ -1,6 +1,7 @@
 package com.assignment.pokemoncatcher.presentation.views
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -13,6 +14,7 @@ import com.assignment.pokemoncatcher.presentation.views.routes.MyPokemonsRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.PokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.ReleasePokemonRoute
 import com.assignment.pokemoncatcher.presentation.views.routes.SplashScreenRoute
+import com.assignment.pokemoncatcher.presentation.views.screens.catch_pokemon.CatchPokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.DetailPokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.explore_pokemon.ExplorePokemonScreen
 import com.assignment.pokemoncatcher.presentation.views.screens.splashscreen.SplashScreen
@@ -37,7 +39,8 @@ fun PokemonApp() {
                 ExplorePokemonRoute.PATH
             ) {
                 ExplorePokemonScreen(
-                    navController
+                    navController,
+                    hiltViewModel()
                 )
             }
 
@@ -51,7 +54,8 @@ fun PokemonApp() {
                     )
                 DetailPokemonScreen(
                     id = pokemonId ?: 0,
-                    navController = navController
+                    navController = navController,
+                    detailPokemonVm = hiltViewModel()
                 )
             }
 
@@ -63,7 +67,22 @@ fun PokemonApp() {
                 CatchPokemonRoute.PATH,
                 arguments = CatchPokemonRoute().getArgs()
             ) {
-
+                val pokemonId =
+                    it.arguments?.getInt(
+                        CatchPokemonRoute.ID
+                    )
+                val pokemonName =
+                    it.arguments?.getString(
+                        CatchPokemonRoute.POKEMON_NAME
+                    )
+                CatchPokemonScreen(
+                    pokemonId = pokemonId
+                        ?: 0,
+                    pokemonName = pokemonName
+                        ?: "",
+                    navController = navController,
+                    catchPokemonVm = hiltViewModel()
+                )
             }
 
             composable(

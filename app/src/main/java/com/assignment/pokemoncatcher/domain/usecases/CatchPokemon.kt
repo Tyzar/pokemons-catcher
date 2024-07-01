@@ -5,14 +5,27 @@ import com.assignment.pokemoncatcher.core.utils.Either
 import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
 import com.assignment.pokemoncatcher.domain.repositories.MyPokemonsRepository
+import com.assignment.pokemoncatcher.domain.repositories.PokemonRepository
 import com.assignment.pokemoncatcher.domain.repositories.PokemonUtilRepository
 import javax.inject.Inject
 
 class CatchPokemon @Inject constructor(
     private val pokemonUtilRepo: PokemonUtilRepository,
-    private val myPokemonsRepo: MyPokemonsRepository
+    private val myPokemonsRepo: MyPokemonsRepository,
+    private val pokemonRepo: PokemonRepository
 ) {
-    suspend fun execute(pokemon: Pokemon): Either<AppError, Boolean> {
+    suspend fun execute(id: Int): Either<AppError, Boolean> {
+
+        val pokemon =
+            pokemonRepo.getPokemonDetail(
+                id
+            )
+        if (pokemon == null) {
+            return Either.left(
+                AppError("Pokemon data not found")
+            )
+        }
+
         val catchResult =
             pokemonUtilRepo.catchPokemon()
         return when (catchResult) {

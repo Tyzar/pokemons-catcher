@@ -95,13 +95,17 @@ class MyPokemonsRoute : Route {
 class CatchPokemonRoute : Route {
     companion object ParamKey {
         const val ID = "id"
+        const val POKEMON_NAME =
+            "pokemon-name"
         const val PATH =
-            "catch-pokemon/{$ID}"
+            "catch-pokemon/{$ID}/{$POKEMON_NAME}"
     }
 
     override fun getArgs(): List<NamedNavArgument> {
         return listOf(navArgument(ID) {
             type = NavType.IntType
+        }, navArgument(POKEMON_NAME) {
+            type = NavType.StringType
         })
     }
 
@@ -110,7 +114,7 @@ class CatchPokemonRoute : Route {
             param?.get(
                 ID
             )
-        }"
+        }/${param?.get(POKEMON_NAME)}"
     }
 
 }

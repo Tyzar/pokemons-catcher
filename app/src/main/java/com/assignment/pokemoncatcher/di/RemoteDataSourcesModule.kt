@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RemoteDataSourcesModule {
     companion object {
-        @Provides()
+        @Provides
         @Singleton
         fun providePokemonApiImpl(): PokemonApiImpl {
             val httpClient =

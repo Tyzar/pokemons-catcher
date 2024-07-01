@@ -7,4 +7,5 @@ import com.assignment.pokemoncatcher.domain.entities.Pokemon
 
 interface PokemonRepository {
     suspend fun getPokemonList(filter: FetchFilter): Either<AppError, List<Pokemon>>
+    suspend fun getPokemonDetail(id: Int): Pokemon?
 }

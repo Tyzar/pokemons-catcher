@@ -25,7 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.assignment.pokemoncatcher.domain.entities.MyPokemon
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
-import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.components.ActionButton
+import com.assignment.pokemoncatcher.presentation.views.components.ActionButtonWithIcon
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.components.BaseStatInfo
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.components.DetailPokemonTopBar
 import com.assignment.pokemoncatcher.presentation.views.screens.detail_pokemon.components.GiveNicknameButton
@@ -45,7 +45,7 @@ fun DetailMyPokemonScreen(
             navController.popBackStack()
         }
     }, bottomBar = {
-        ActionButton(
+        ActionButtonWithIcon(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(

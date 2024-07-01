@@ -10,6 +10,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 const val REQUEST_TIMEOUT = 30000
@@ -31,6 +32,7 @@ fun createKtorHttpClient(baseUrl: String): HttpClient {
 
         install(ContentNegotiation) {
             json(Json {
+                ignoreUnknownKeys = true
                 prettyPrint = true
                 isLenient = true
             })
@@ -50,11 +52,6 @@ fun createKtorHttpClient(baseUrl: String): HttpClient {
             }
 
             level = LogLevel.ALL
-            filter { request ->
-                request.url.host.contains(
-                    "ktor.io"
-                )
-            }
         }
     }
 }

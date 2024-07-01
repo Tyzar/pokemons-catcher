@@ -1,6 +1,7 @@
 package com.assignment.pokemoncatcher.implementation.datasources.local.room.pokemon_localdata
 
 import com.assignment.pokemoncatcher.core.errors.AppError
+import com.assignment.pokemoncatcher.core.utils.DebugLog
 import com.assignment.pokemoncatcher.core.utils.Either
 import com.assignment.pokemoncatcher.datasources.local.pokemon_localdata.PokemonLocalData
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
@@ -40,32 +41,30 @@ class PokemonLocalDataImpl @Inject constructor(
             try {
                 pokemonDao.batchUpsert(
                     pokemons.map { it.toTable() })
+                DebugLog.log(msg = "Insert pokemons to local success")
                 return@withContext Either.right(
                     Unit
                 )
             } catch (e: Exception) {
+                DebugLog.log(
+                    v = DebugLog.Verbose.ERROR,
+                    msg = "Insert pokemons to local error"
+                )
                 return@withContext Either.left(
                     AppError("Failed to insert or update pokemon data")
                 )
             }
         }
 
-    override suspend fun get(id: Int): Either<AppError, Pokemon?> =
+    override suspend fun get(id: Int): Pokemon? =
         withContext(Dispatchers.IO) {
             try {
                 val tPokemon =
                     pokemonDao.get(id)
-                        ?: return@withContext Either.right(
-                            null
-                        )
 
-                return@withContext Either.right(
-                    tPokemon.toDomain()
-                )
+                return@withContext tPokemon?.toDomain()
             } catch (e: Exception) {
-                return@withContext Either.left(
-                    AppError("Failed to get pokemon data")
-                )
+                return@withContext null
             }
         }
 }

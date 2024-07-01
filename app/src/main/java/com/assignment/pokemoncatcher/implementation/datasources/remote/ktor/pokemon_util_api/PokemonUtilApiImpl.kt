@@ -40,7 +40,11 @@ class PokemonUtilApiImpl @Inject constructor(
                 val resp =
                     httpClient.post(
                         POST_CATCH_POKEMON
-                    )
+                    ) {
+                        contentType(
+                            ContentType.Application.Json
+                        )
+                    }
                         .body<CatchPokemonResponse>()
                 return@withContext Either.right(
                     resp

@@ -18,16 +18,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AppChip(
+    modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
     text: String
 ) {
     Box(
         modifier = Modifier
+            .clip(shape = MaterialTheme.shapes.extraSmall)
             .background(
                 backgroundColor
-            )
-            .clip(shape = MaterialTheme.shapes.extraSmall),
+            ),
         contentAlignment = Alignment.Center
     ) {
         Text(

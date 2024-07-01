@@ -1,6 +1,7 @@
 package com.assignment.pokemoncatcher.datasources.remote.pokemonapi.responses.getpokemondetail
 
 import com.assignment.pokemoncatcher.domain.entities.Pokemon
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,7 +15,7 @@ data class GetPokemonDetailResponse(
 ) {
     @Serializable
     data class PokemonDataStat(
-        val baseStat: Int?,
+        @SerialName("base_stat") val baseStat: Int?,
         val stat: DataStat?
     ) {
         @Serializable
@@ -39,10 +40,14 @@ data class GetPokemonDetailResponse(
     @Serializable
     data class Sprite(val other: SpriteOther?) {
         @Serializable
-        data class SpriteOther(val officialArtwork: OfficialArtwork?) {
+        data class SpriteOther(
+            @SerialName(
+                "official-artwork"
+            ) val officialArtwork: OfficialArtwork?
+        ) {
             @Serializable
             data class OfficialArtwork(
-                val frontShiny: String?
+               @SerialName("front_shiny") val frontShiny: String?
             )
         }
     }
