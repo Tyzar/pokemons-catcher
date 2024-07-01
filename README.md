@@ -87,6 +87,7 @@ Architecture of project separates business logic from display (UI) logic. This i
 **Presentations**: All presentations or UI related file are organized in this directories. Ex: Jetpack compose screens or components, viewmodels, routing, theme, and UI specific utility file
 #### Data Layer
 **Repositories**: Besides in domain layer, repository also has an implementations in this data layer to provide communication from domain to datasources.
+
 **Datasources**: Responsible to fetch data from remote sources like web API or local sources (local database, preferences, file, etc).
 
 ## State Management
